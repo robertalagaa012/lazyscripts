@@ -5,7 +5,7 @@ function print() {
 }
 
 function build1() {
-    git clone --depth=1 --quiet "https://theradcolor:${GITHUB_TOKEN}@github.com/theradcolor/BOB-scripts" scripts
+    git clone --depth=1 --quiet "https://radcolor:${GITHUB_TOKEN}@github.com/theradcolor/BOB-scripts" scripts
     sed -i "s/BOT_TOKEN=.*/BOT_TOKEN=$TELEGRAM_TOKEN/g" scripts/build1
     script -c "bash -x scripts/build1" build.log
 }
