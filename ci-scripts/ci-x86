@@ -9,13 +9,13 @@ WD=$(pwd)
 K_DIR=${WD}
 K_VERSION=$(make -s kernelrelease)
 PACKAGE_NAME="RAD-"${K_VERSION}-${DATE}.tar.zst
-TOKEN="123:xyz"
-CHAT_ID="-1001375712567"
-CHANNEL_ID="-1001487815579"
+TOKEN="1993667382:AAGFqdw9cNvTTOl7kpsI-01F9cNGH67-rno"
+CHAT_ID="-1001521004460"
+CHANNEL_ID="-1001521004460"
 
 function envsetup() {
   # Kbuild host and user
-  export KBUILD_BUILD_USER="shashank"
+  export KBUILD_BUILD_USER="robertalaga"
   export KBUILD_BUILD_HOST="archlinux"
 
   export KBUILD_JOBS="$(($(grep -c '^processor' /proc/cpuinfo) * 2))"
@@ -139,7 +139,7 @@ function zipping() {
 function send-package() {
   LINUX="/drone/src/package/linux.zip"
   gh auth login --with-token ${GITHUB_TOKEN}
-  git clone https://theradcolor:${GITHUB_TOKEN}@github.com/theradcolor/linux-ci-release.git && cd linux-ci-release
+  git clone https://radcolor:${GITHUB_TOKEN}@github.com/radcolor/linux-ci-release.git && cd linux-ci-release
   gh release delete v1
   git push origin :refs/tags/v1
   gh release create v1 ${LINUX} -t 'Linux Release' -n 'Sample Notes'
