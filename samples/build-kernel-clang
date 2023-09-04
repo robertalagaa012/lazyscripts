@@ -7,7 +7,7 @@
 # Set defaults
 wd=$(pwd)
 out=$wd/out
-BUILD="/home/theradcolor/kernel/source"
+BUILD="/home/radcolor/kernel/source"
 ANYKERNEL_DIR=${HOME}/anykernel2
 DATE=$(date +"%d-%m-%y")
 BUILD_START=$(date +"%s")
@@ -26,7 +26,7 @@ cd ${BUILD} || exit
 # Use ccache
 ccache=$(which ccache)
 export USE_CCACHE=1
-export CCACHE_DIR="/home/theradcolor/.ccache"
+export CCACHE_DIR="/home/radcolor/.ccache"
 
 # Export ARCH <arm, arm64, x86, x86_64>
 export ARCH=arm64
@@ -34,14 +34,14 @@ export SUBARCH=arm64
 
 # Set kernal configurations
 export LOCALVERSION=-v1
-export KBUILD_BUILD_USER=theradcolor
+export KBUILD_BUILD_USER=robertalaga
 export KBUILD_BUILD_HOST=ILLYRIA
 
 # Compiler String
 CLANG_TRIPLE=aarch64-linux-gnu-
-GCC64=/home/theradcolor/whyred/compilers/aarch64-linux-android-4.9/bin/aarch64-linux-android-
-GCC32=/home/theradcolor/whyred/compilers/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
-CC="${ccache} /home/theradcolor/clang/bin/clang"
+GCC64=/home/radcolor/whyred/compilers/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+GCC32=/home/radcolor/whyred/compilers/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
+CC="${ccache} /home/radcolor/clang/bin/clang"
 KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')"
 export KBUILD_COMPILER_STRING
 
