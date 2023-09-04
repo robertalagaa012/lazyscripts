@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Copyright (C) 2020 Shashank Baghel under GPLv3
-# Personal kernel CI build script for https://github.com/theradcolor/android_kernel_xiaomi_whyred
+# Personal kernel CI build script for https://github.com/radcolor/android_kernel_xiaomi_whyred
 
 # Only build if trigger event is custom and ci kernel type is fakerad
 if [[ ${DRONE_BUILD_EVENT} == "custom" && ${CI_KERNEL_TYPE} == "fakerad" ]]; then
@@ -14,8 +14,8 @@ fi
 export TZ=Asia/Kolkata
 
 # Configure git
-git config --global user.name "Shashank Baghel"
-git config --global user.email "theradcolor@gmail.com"
+git config --global user.name "robertalagaa012"
+git config --global user.email "robertalaga@proton.me"
 
 DATE="$(date +%d%m%Y-%H%M%S)"
 CHANNEL_ID="-1001487815579"
@@ -395,7 +395,7 @@ function tg_push_log() {
         -F chat_id="${GRP_CHAT_ID}" \
         -F "disable_web_page_preview=true" \
         -F "parse_mode=html" \
-        -F caption="Build logs for ${TYPE}-${CAM_TYPE}, took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). @theradcolor"
+        -F caption="Build logs for ${TYPE}-${CAM_TYPE}, took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). @radcolor"
 }
 
 function patch_anykernel() {
