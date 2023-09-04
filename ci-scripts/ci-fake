@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Copyright (C) 2020 Shashank Baghel under GPLv3
-# Personal kernel CI build script for https://github.com/theradcolor/android_kernel_xiaomi_whyred
+# Personal kernel CI build script for https://github.com/radcolor/android_kernel_xiaomi_whyred
 
 # Only build if trigger event is custom and ci kernel type is fakerad
 if [[ ${DRONE_BUILD_EVENT} == "custom" && ${CI_KERNEL_TYPE} == "fakerad" ]]; then
@@ -16,8 +16,8 @@ fi
 export TZ=Asia/Kolkata
 
 # Configure git
-git config --global user.name "Shashank Baghel"
-git config --global user.email "theradcolor@gmail.com"
+git config --global user.name "robertalagaa012"
+git config --global user.email "robertalaga@proton.me"
 
 DATE="$(date +%d%m%Y-%H%M%S)"
 CONFIG="fakerad_defconfig"
@@ -28,7 +28,7 @@ ANYKERNEL_DIR=${WD}"/AnyKernel3"
 IMG=${OUT}"/arch/arm64/boot/Image.gz-dtb"
 
 function clone_clang() {
-    git clone --depth=1 --quiet https://github.com/theradcolor/clang clang
+    git clone --depth=1 --quiet https://github.com/radcolor/clang clang
 }
 
 function clone_proton_clang() {
@@ -46,12 +46,12 @@ function clone_aosp_clang() {
 }
 
 function clone_gcc() {
-    git clone --depth=1 --quiet https://github.com/theradcolor/arm-eabi -b ${GCC_BRANCH} gcc32
-    git clone --depth=1 --quiet https://github.com/theradcolor/aarch64-elf -b ${GCC_BRANCH} gcc64
+    git clone --depth=1 --quiet https://github.com/radcolor/arm-eabi -b ${GCC_BRANCH} gcc32
+    git clone --depth=1 --quiet https://github.com/radcolor/aarch64-elf -b ${GCC_BRANCH} gcc64
 }
 
 function clone_anykernel() {
-    git clone --depth=1 --quiet https://github.com/theradcolor/AnyKernel3 -b ${AK_CLONE_BRANCH}
+    git clone --depth=1 --quiet https://github.com/radcolor/AnyKernel3 -b ${AK_CLONE_BRANCH}
 }
 
 function checkout_source() {
@@ -81,7 +81,7 @@ function set_param_gcc() {
     export KBUILD_COMPILER_STRING="${COMPILER_STRING}"
 
     export COMPILER_HEAD_COMMIT=$(cd gcc64 && git rev-parse HEAD)
-    export COMPILER_HEAD_COMMIT_URL="https://github.com/theradcolor/aarch64-elf/commit/${COMPILER_HEAD_COMMIT}"
+    export COMPILER_HEAD_COMMIT_URL="https://github.com/radcolor/aarch64-elf/commit/${COMPILER_HEAD_COMMIT}"
 }
 
 function set_param_clang() {
@@ -109,7 +109,7 @@ function set_param_clang() {
     export COMPILER_HEAD_COMMIT=$(cd clang && git rev-parse HEAD)
 
     if [ ${COMPILER} == "clang" ]; then
-        export COMPILER_HEAD_COMMIT_URL="https://github.com/theradcolor/clang/commit/${COMPILER_HEAD_COMMIT}"
+        export COMPILER_HEAD_COMMIT_URL="https://github.com/radcolor/clang/commit/${COMPILER_HEAD_COMMIT}"
     elif [ ${COMPILER} == "proton-clang" ]; then
         export COMPILER_HEAD_COMMIT_URL="https://github.com/kdrag0n/proton-clang/commit/${COMPILER_HEAD_COMMIT}"
     else
@@ -134,7 +134,7 @@ function set_param_aosp_clang() {
     export KBUILD_COMPILER_STRING="${COMPILER_STRING}"
 
     #export COMPILER_HEAD_COMMIT=$(cd clang && git rev-parse HEAD)
-    #export COMPILER_HEAD_COMMIT_URL="https://github.com/theradcolor/clang/commit/${COMPILER_HEAD_COMMIT}"
+    #export COMPILER_HEAD_COMMIT_URL="https://github.com/radcolor/clang/commit/${COMPILER_HEAD_COMMIT}"
 }
 
 function build_gcc() {
@@ -340,9 +340,9 @@ function check_kernel_type() {
 
 function tg_inform() {
     KERNEL_COMMIT="$(git rev-parse HEAD)"
-    KERNEL_URL="https://github.com/theradcolor/android_kernel_xiaomi_whyred/commit/"
+    KERNEL_URL="https://github.com/radcolor/android_kernel_xiaomi_whyred/commit/"
     SCRIPT_COMMIT="$(cd lazyscripts && git log -n 1 --pretty=format:%H -- ci-scripts/ci-rad)"
-    SCRIPT_URL="https://github.com/theradcolor/lazyscripts/commit/"
+    SCRIPT_URL="https://github.com/radcolor/lazyscripts/commit/"
 
     if [ ${CONFIG} == "fakerad_defconfig" ]; then
         curl -s -X POST https://api.telegram.org/bot${TG_BOT_API}/sendMessage?chat_id=${TRIGGERED_CHANNEL} -d "disable_web_page_preview=true" -d "parse_mode=markdownV2&text=⚒️ *Building with* [*$(echo ${SCRIPT_COMMIT} | cut -c1-8)*](${SCRIPT_URL}${SCRIPT_COMMIT}) / [*$(echo ${KERNEL_COMMIT} | cut -c1-8)*](${KERNEL_URL}${KERNEL_COMMIT})"
@@ -378,21 +378,21 @@ function tg_push_log() {
         -F chat_id="${TRIGGERED_CHANNEL}" \
         -F "disable_web_page_preview=true" \
         -F "parse_mode=html" \
-        -F caption="Build logs for ${TYPE}-${CAM_TYPE}, took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). @theradcolor"
+        -F caption="Build logs for ${TYPE}-${CAM_TYPE}, took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). @radcolor"
 }
 
 function patch_anykernel() {
     if [ ${TYPE} == "eas" ]; then
-        curl https://raw.githubusercontent.com/theradcolor/patches/master/0001-anykernel3-add-our-init.rc-script-to-execute-on-boot-eas.patch | git am
+        curl https://raw.githubusercontent.com/radcolor/patches/master/0001-anykernel3-add-our-init.rc-script-to-execute-on-boot-eas.patch | git am
         rm -rf *.patch
     elif [ ${TYPE} == "hmp" ]; then
-        curl https://raw.githubusercontent.com/theradcolor/patches/master/0001-anykernel3-add-our-init.rc-script-to-execute-on-boot-hmp.patch | git am
+        curl https://raw.githubusercontent.com/radcolor/patches/master/0001-anykernel3-add-our-init.rc-script-to-execute-on-boot-hmp.patch | git am
         rm -rf *.patch
     elif [ ${TYPE} == "staging-eas" ]; then
-        curl https://raw.githubusercontent.com/theradcolor/patches/master/0001-anykernel3-add-our-init.rc-script-to-execute-on-boot-eas.patch | git am
+        curl https://raw.githubusercontent.com/radcolor/patches/master/0001-anykernel3-add-our-init.rc-script-to-execute-on-boot-eas.patch | git am
         rm -rf *.patch
     elif [ ${TYPE} == "staging-hmp" ]; then
-        curl https://raw.githubusercontent.com/theradcolor/patches/master/0001-anykernel3-add-our-init.rc-script-to-execute-on-boot-hmp.patch | git am
+        curl https://raw.githubusercontent.com/radcolor/patches/master/0001-anykernel3-add-our-init.rc-script-to-execute-on-boot-hmp.patch | git am
         rm -rf *.patch
     else
         echo "Type not mentioned, skipping patches!"
@@ -416,22 +416,22 @@ function lto_patches() {
         if [ ${COMPILER} == "gnu-gcc" ]; then
 
             if [ ${KERNEL_TYPE} == "fakerad" ]; then
-                curl https://raw.githubusercontent.com/theradcolor/patches/master/fakerad-gcc-lto-patch.patch | git am
+                curl https://raw.githubusercontent.com/radcolor/patches/master/fakerad-gcc-lto-patch.patch | git am
                 rm -rf *.patch
             else
                 # GCC LTO patches for kernel
-                curl https://raw.githubusercontent.com/theradcolor/patches/master/rad-kernel-gcc-lto-patch.patch | git am
+                curl https://raw.githubusercontent.com/radcolor/patches/master/rad-kernel-gcc-lto-patch.patch | git am
                 rm -rf *.patch
             fi
 
         elif [ ${COMPILER} == "proton-clang" ]; then
 
             if [ ${KERNEL_TYPE} == "fakerad" ]; then
-                curl https://raw.githubusercontent.com/theradcolor/patches/master/fakerad-clang-lto-patch.patch | git am
+                curl https://raw.githubusercontent.com/radcolor/patches/master/fakerad-clang-lto-patch.patch | git am
                 rm -rf *.patch
             else
                 # CLANG LTO patches for kernel
-                curl https://raw.githubusercontent.com/theradcolor/patches/master/rad-kernel-clang-lto-patch.patch | git am
+                curl https://raw.githubusercontent.com/radcolor/patches/master/rad-kernel-clang-lto-patch.patch | git am
             fi
         else
             echo "Compiler not specified"
