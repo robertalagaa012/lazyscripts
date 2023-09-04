@@ -18,8 +18,8 @@ git config --global user.name "robertalagaa012"
 git config --global user.email "robertalaga@proton.me"
 
 DATE="$(date +%d%m%Y-%H%M%S)"
-CHANNEL_ID="-1001487815579"
-GRP_CHAT_ID="-1001375712567"
+CHANNEL_ID="-1001521004460"
+GRP_CHAT_ID="-1001521004460"
 WD="$(pwd)"
 OUT=${WD}"/out"
 KERNEL_DIR=${WD}
