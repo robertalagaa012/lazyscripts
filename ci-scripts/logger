@@ -1,7 +1,7 @@
 #!/bin/bash
 
-GRP_CHAT_ID0="-1001487815579"
-GRP_CHAT_ID1="-1001375712567"
+GRP_CHAT_ID0="-1001521004460"
+GRP_CHAT_ID1="-1001521004460"
 
 function send_radkernel_and_logs() {
 	# cd to project
